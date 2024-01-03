@@ -4,7 +4,7 @@ import 'package:happy_connect/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:happy_connect/UI/Widget/Widget.dart';
 
-class _CounterAppState extends State<HappyConnect> {
+class Login extends State<HappyConnect> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -15,8 +15,8 @@ class _CounterAppState extends State<HappyConnect> {
         throw 'Could not launch $url';
       }
     }
-
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
             alignment: Alignment.center,
@@ -139,7 +139,7 @@ class _CounterAppState extends State<HappyConnect> {
                                 onTap: () {
                                   _launchURL('https://example.com');
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Đăng ký',
                                   style: TextStyle(
                                     fontSize: 16,
@@ -156,7 +156,7 @@ class _CounterAppState extends State<HappyConnect> {
                           onTap: () {
                             _launchURL('https://example.com');
                           },
-                          child: Text(
+                          child: const Text(
                             'Chính sách bảo mật và quyền riêng tư',
                             style: TextStyle(
                               fontSize: 14,
