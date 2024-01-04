@@ -15,6 +15,7 @@ class Login extends State<HappyConnect> {
         throw 'Could not launch $url';
       }
     }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
