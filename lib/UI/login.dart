@@ -85,7 +85,7 @@ class Login extends State<HappyConnect> {
                             border: OutlineInputBorder(
                               // Đặt loại đường biên và màu sắc
                               borderRadius: BorderRadius.circular(100.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color.fromARGB(100, 146, 146, 146),
                                 width: 2.0,
                               ),
@@ -95,13 +95,13 @@ class Login extends State<HappyConnect> {
                       ),
                       Container(
                         width: 300,
-                        margin: EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               // Đặt loại đường biên và màu sắc
                               borderRadius: BorderRadius.circular(100.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color.fromARGB(100, 146, 146, 146),
                                 width: 2.0,
                               ),
@@ -120,7 +120,7 @@ class Login extends State<HappyConnect> {
                             onPrimary: Colors.white, // Màu chữ của nút
                           ),
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'Đăng nhập',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -132,7 +132,7 @@ class Login extends State<HappyConnect> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 'Bạn chưa có tài khoản?',
                                 style: TextStyle(fontSize: 15),
                               ),
@@ -152,17 +152,15 @@ class Login extends State<HappyConnect> {
                           ),
                         ),
                       ),
-                      Container(
-                        child: GestureDetector(
-                          onTap: () {
-                            _launchURL('https://example.com');
-                          },
-                          child: const Text(
-                            'Chính sách bảo mật và quyền riêng tư',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          _launchURL('https://example.com');
+                        },
+                        child: const Text(
+                          'Chính sách bảo mật và quyền riêng tư',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
                           ),
                         ),
                       )
