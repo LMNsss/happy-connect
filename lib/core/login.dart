@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:happy_connect/main.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:happy_connect/UI/Widget/Widget.dart';
+import 'package:happy_connect/core/Widget/text.dart';
 
-class Login extends State<HappyConnect> {
+class Login extends StatefulWidget{
+  @override
+  _Login creatState() => _Login();
+
+
+}
+class _Login extends State<Login> {
+  final userController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -81,7 +88,9 @@ class Login extends State<HappyConnect> {
                         width: 300,
                         margin: EdgeInsets.only(top: 20),
                         child: TextField(
+                          controller: _usernameController() ,
                           decoration: InputDecoration(
+                            hintText: 'Username',
                             border: OutlineInputBorder(
                               // Đặt loại đường biên và màu sắc
                               borderRadius: BorderRadius.circular(100.0),
@@ -91,13 +100,16 @@ class Login extends State<HappyConnect> {
                               ),
                             ),
                           ),
+                          textInputAction: TextInputAction.next,
                         ),
                       ),
                       Container(
                         width: 300,
                         margin: const EdgeInsets.only(top: 10),
                         child: TextField(
+                          controller: _passwordController(),
                           decoration: InputDecoration(
+                            hintText: 'Password',
                             border: OutlineInputBorder(
                               // Đặt loại đường biên và màu sắc
                               borderRadius: BorderRadius.circular(100.0),
@@ -107,6 +119,10 @@ class Login extends State<HappyConnect> {
                               ),
                             ),
                           ),
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete:(){
+
+                          },
                         ),
                       ),
                       Container(
@@ -174,3 +190,5 @@ class Login extends State<HappyConnect> {
     );
   }
 }
+
+
