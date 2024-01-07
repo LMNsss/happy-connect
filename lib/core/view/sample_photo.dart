@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:happy_connect/Models/user_model.dart';
+import 'package:happy_connect/core/Models/user_model.dart';
 
 
 class SamplePhoto extends StatefulWidget {
@@ -20,7 +19,7 @@ class _SamplePhoto extends State<SamplePhoto> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(widget.user.user_name),
+            Text(widget.user.username),
             Text(widget.user.token),
 
           ],

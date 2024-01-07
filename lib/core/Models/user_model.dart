@@ -1,6 +1,6 @@
 class UserModel{
-  final String user_name;
+  final String username;
   final String token;
 
-  UserModel({required this.user_name, required this.token});
+  UserModel({required this.username, required this.token});
 }

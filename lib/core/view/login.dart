@@ -1,17 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:happy_connect/core/Models/user_model.dart';
+import 'package:happy_connect/core/view/sample_photo.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:happy_connect/core/Widget/text.dart';
+import 'package:happy_connect/core/components/text.dart';
+import 'package:happy_connect/core/services/login_services.dart';
+import 'package:happy_connect/core/interface/login_interface.dart';
 
-class Login extends StatefulWidget{
-  @override
+class Login extends StatefulWidget {
   _Login creatState() => _Login();
 
-
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() {
+    throw UnimplementedError();
+  }
 }
+
 class _Login extends State<Login> {
-  final userController = TextEditingController();
-  final passwordController = TextEditingController();
+  final ILogin _loginService = LoginService();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -88,7 +97,7 @@ class _Login extends State<Login> {
                         width: 300,
                         margin: EdgeInsets.only(top: 20),
                         child: TextField(
-                          controller: _usernameController() ,
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             hintText: 'Username',
                             border: OutlineInputBorder(
@@ -107,7 +116,7 @@ class _Login extends State<Login> {
                         width: 300,
                         margin: const EdgeInsets.only(top: 10),
                         child: TextField(
-                          controller: _passwordController(),
+                          controller: _passwordController,
                           decoration: InputDecoration(
                             hintText: 'Password',
                             border: OutlineInputBorder(
@@ -120,30 +129,52 @@ class _Login extends State<Login> {
                             ),
                           ),
                           textInputAction: TextInputAction.done,
-                          onEditingComplete:(){
-
-                          },
+                          onEditingComplete: () {},
                         ),
                       ),
                       Container(
                         width: 300,
                         height: 65,
-                        margin: EdgeInsets.only(top: 20.0),
+                        margin: const EdgeInsets.only(top: 20.0),
                         // Đặt margin cho nút 2
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red, // Màu nền của nút
-                            onPrimary: Colors.white, // Màu chữ của nút
-                          ),
-                          onPressed: () {},
+                          // ignore: sort_child_properties_last
                           child: const Text(
                             'Đăng nhập',
                             style: TextStyle(fontSize: 20),
                           ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red, // Màu nền của nút
+                            onPrimary: Colors.white, // Màu chữ của nút
+                          ),
+                          onPressed: () async {
+                            if (_usernameController.text.isNotEmpty &&
+                                _passwordController.text.isNotEmpty) {
+                              UserModel? user = await _loginService.login(
+                                  _usernameController.text,
+                                  _passwordController.text);
+                              if (user != null) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => SamplePhoto(user: user),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(seconds: 3),
+                                    content:
+                                        Text('email or password incorrect'),
+                                  ),
+                                );
+                                return null;
+                              }
+                            }
+                          },
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: const EdgeInsets.only(top: 15),
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -190,5 +221,3 @@ class _Login extends State<Login> {
     );
   }
 }
-
-
