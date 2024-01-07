@@ -15,13 +15,7 @@ class SingleTextWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Kiểm tra giá trị null cho các tham số required
-    assert(text != null);
-    assert(textColor != null);
-    assert(textSize != null);
-    assert(textWeight != null);
-
+  Widget build(BuildContext context) {    
     return Text(
       text,
       style: TextStyle(color: textColor, fontSize: textSize, fontWeight: textWeight),
