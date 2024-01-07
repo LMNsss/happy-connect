@@ -3,7 +3,7 @@ import 'package:happy_connect/core/view/login.dart';
 import 'package:happy_connect/core/view/sample_photo.dart';
 import 'package:happy_connect/core/services/login_services.dart';
 
-class AppWidget extends StatelessWidget {
+class HappyConnect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
