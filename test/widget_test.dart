@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:happy_connect/main.dart';
 import 'package:happy_connect/core/app_widget.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

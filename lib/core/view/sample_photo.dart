@@ -20,8 +20,6 @@ class _SamplePhoto extends State<SamplePhoto> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(widget.user.username),
-            Text(widget.user.token),
-
           ],
         ),
       ),
