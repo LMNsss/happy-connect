@@ -1,7 +1,12 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:happy_connect/core/view/sample_photo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:happy_connect/core/components/text.dart';
+import '../Models/token_model.dart';
 import '../services/auth_services.dart';
+import '../utils/api_endpoints.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -10,25 +15,24 @@ class Login extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+
   void _login() async {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    String? authToken =
-        (await _authService.login(username, password)) as String?;
+    String tokenModel = await _authService.login(username, password);
 
-    if (authToken != null) {
+    if (tokenModel != null) {
       // Successfully logged in, navigate to the next screen or perform other actions
-      print('Login successful. Token: $authToken');
+      print('Login successful. Token: ${tokenModel}');
+
     } else {
-      // Handle login failure
-      print('Login failed.');
+      print('Login failed');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     double screenHeight = MediaQuery.of(context).size.height;
     _launchURL(String url) async {
       if (await canLaunch(url)) {
@@ -115,25 +119,29 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 300,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: TextField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        border: OutlineInputBorder(
-                          // Đặt loại đường biên và màu sắc
-                          borderRadius: BorderRadius.circular(100.0),
-                          borderSide: const BorderSide(
-                            color: Color.fromARGB(100, 146, 146, 146),
-                            width: 2.0,
+                      width: 300,
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        children: [
+                          TextField(
+                            // obscureText: true,
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              border: OutlineInputBorder(
+                                // Đặt loại đường biên và màu sắc
+                                borderRadius: BorderRadius.circular(100.0),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(100, 146, 146, 146),
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: () {},
                           ),
-                        ),
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onEditingComplete: () {},
-                    ),
-                  ),
+                        ],
+                      )),
                   Container(
                     width: 300,
                     height: 65,

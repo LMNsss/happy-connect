@@ -6,8 +6,8 @@ class AuthController {
   final AuthService _authService = AuthService();
 
   Future<String?> login(String username, String password) async {
-    TokenModel? tokenModel = await _authService.login(username, password);
-    return tokenModel?.token;
+    String tokenModel = await _authService.login(username, password);
+    return tokenModel;
   }
 
   Future<void> logout() async {

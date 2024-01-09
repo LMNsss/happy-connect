@@ -5,7 +5,7 @@ class TokenModel {
 
   factory TokenModel.fromJson(Map<String, dynamic> json) {
     return TokenModel(
-      token: json['token'],
+      token: json['access_token'],
     );
   }
 }

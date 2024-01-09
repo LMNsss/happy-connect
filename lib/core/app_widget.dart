@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:happy_connect/core/controllers/auth_controller.dart';
 import 'package:happy_connect/core/view/login.dart';
 
 class HappyConnect extends StatelessWidget {
@@ -15,3 +16,4 @@ class HappyConnect extends StatelessWidget {
     );
   }
 }
+
