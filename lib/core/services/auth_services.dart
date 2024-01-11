@@ -12,7 +12,7 @@ class AuthService {
   Future<String> login(String username, String password) async {
     try {
       final response = await _dio.post(
-        '${ApiEndPoints.baseUrl}${ApiEndPoints.authEndpoints.login}',
+        'https://checkin2.viettel-softwareservices.vn:9091/api/v1/login',
         data: {
           'username': username,
           'password': password,
@@ -21,7 +21,7 @@ class AuthService {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data['data']['access_token']!='') {
         print('Success!!');
         // final tokenModel = TokenModel.fromJson(response.data);
         // await saveToken(tokenModel.token);
