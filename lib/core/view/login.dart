@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:happy_connect/core/view/sample_photo.dart';
+import 'package:happy_connect/core/view/Home/home.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:happy_connect/core/components/text.dart';
-import '../Models/token_model.dart';
+
 import '../services/auth_services.dart';
-import '../utils/api_endpoints.dart';
 
 class Login extends StatefulWidget {
   State<Login> createState() => _Login();
@@ -16,19 +16,19 @@ class _Login extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() async {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-
-    String tokenModel = await _authService.login(username, password);
-
-    if (tokenModel != '') {
-      // Successfully logged in, navigate to the next screen or perform other actions
-      print('Login successful. Token: $tokenModel');
+    // String username = _usernameController.text;
+    // String password = _passwordController.text;
+    //
+    // String tokenModel = await _authService.login(username, password);
+    //
+    // if (tokenModel != '') {
+    //   // Successfully logged in, navigate to the next screen or perform other actions
+    //   print('Login successful. Token: $tokenModel');
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => SamplePhoto()));
-    } else {
-      print('Login failed');
-    }
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    // } else {
+    //   print('Login failed');
+    // }
   }
 
   @override
