@@ -12,7 +12,7 @@ class AuthService {
   Future<String> login(String username, String password) async {
     try {
       final response = await _dio.post(
-        'https://checkin2.viettel-softwareservices.vn:9091/api/v1/login',
+        ApiEndPoints.baseUrl+ApiEndPoints.authEndpoints.login,
         data: {
           'username': username,
           'password': password,
@@ -55,10 +55,7 @@ class AuthService {
   }
 
   Future<UserModel?> getUserProfile() async {
-    // Implement logic to fetch user profile based on the token
-    // ...
 
-    // For demonstration purposes, return a dummy user
     return UserModel(username: 'demo', email: 'demo@example.com');
   }
 }

@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static final String baseUrl = 'https://checkin2.viettel-softwareservices.vn:9091/api/';
+  static final String baseUrl = 'https://api-hp.viettelsoftware.com:8443/api/';
   static _AuthEndPoints authEndpoints = _AuthEndPoints();
 }
 
