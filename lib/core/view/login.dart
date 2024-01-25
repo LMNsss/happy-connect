@@ -7,6 +7,9 @@ import 'package:happy_connect/core/components/text.dart';
 import '../services/auth_services.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
   State<Login> createState() => _Login();
 }
 
@@ -136,15 +139,15 @@ class _Login extends State<Login> {
                       height: 65,
                       margin: const EdgeInsets.only(top: 20.0),
                       child: ElevatedButton(
-                        child: const Text(
-                          'Đăng nhập',
-                          style: TextStyle(fontSize: 20),
-                        ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
                           onPrimary: Colors.white,
                         ),
                         onPressed: _login,
+                        child: const Text(
+                          'Đăng nhập',
+                          style: TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                     Container(
