@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/token_model.dart';
 import '../Models/user_model.dart';
 import '../utils/api_endpoints.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class AuthService {
   final Dio _dio = Dio();
@@ -12,7 +13,7 @@ class AuthService {
   Future<String> login(String username, String password) async {
     try {
       final response = await _dio.post(
-        ApiEndPoints.baseUrl+ApiEndPoints.authEndpoints.login,
+        ApiEndPoints.baseUrl + ApiEndPoints.authEndpoints.login,
         data: {
           'username': username,
           'password': password,
@@ -21,10 +22,9 @@ class AuthService {
         },
       );
 
-      if (response.statusCode == 200 && response.data['data']['access_token']!='') {
+      if (response.statusCode == 200 &&
+          response.data['data']['access_token'] != '') {
         print('Success!!');
-        // final tokenModel = TokenModel.fromJson(response.data);
-        // await saveToken(tokenModel.token);
         await saveToken(response.data['data']['access_token']);
         return response.data['data']['access_token'];
       } else {
@@ -55,7 +55,24 @@ class AuthService {
   }
 
   Future<UserModel?> getUserProfile() async {
-
-    return UserModel(username: 'demo', email: 'demo@example.com');
+    try {
+      // Giả sử getToken() trả về một String hoặc null
+      String? token = getToken() as String?;
+      if (token == '') {
+        // Token không tồn tại, có thể là người dùng chưa đăng nhập
+        return null;
+      }
+      Map<String, dynamic> decodedToken = Jwt.parseJwt(token!);
+      String userName = decodedToken['preferred_username'];
+      String email = decodedToken['email'];
+      // Tạo một đối tượng UserModel từ thông tin người dùng
+      UserModel user = UserModel(userName: userName, email: email);
+      // Trả về thông tin người dùng
+      return user;
+    } catch (e) {
+      // Xử lý lỗi nếu có
+      print("Error getting user profile: $e");
+      return null;
+    }
   }
 }

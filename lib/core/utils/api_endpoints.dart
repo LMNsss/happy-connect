@@ -1,9 +1,9 @@
 class ApiEndPoints {
-  static final String baseUrl = 'https://api-hp.viettelsoftware.com:8443/api/';
+  static final String baseUrl = 'https://api-hp.viettelsoftware.com:8443/api/v1/';
   static _AuthEndPoints authEndpoints = _AuthEndPoints();
 }
 
 class _AuthEndPoints {
-  final String registerEmail = 'v1/registration';
-  final String login = 'v1/login';
+  final String registerEmail = 'registration';
+  final String login = 'login';
 }

@@ -21,9 +21,7 @@ class _Login extends State<Login> {
   void _login() async {
     String username = _usernameController.text;
     String password = _passwordController.text;
-
     String tokenModel = await _authService.login(username, password);
-
     if (tokenModel != '') {
       // Successfully logged in, navigate to the next screen or perform other actions
       print('Login successful. Token: $tokenModel');
