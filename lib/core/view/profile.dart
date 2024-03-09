@@ -13,7 +13,7 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  late UserModel _user;
+  late UserModel _user = UserModel(userName: 'abc', email: 'abc');
 
   @override
   void initState() {
