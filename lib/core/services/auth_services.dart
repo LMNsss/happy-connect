@@ -4,9 +4,10 @@ import '../Models/token_model.dart';
 import '../Models/user_model.dart';
 import '../utils/api_endpoints.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class AuthService {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio()..interceptors.add(PrettyDioLogger());
 
   static const String accessTokenKey = 'access_token';
 

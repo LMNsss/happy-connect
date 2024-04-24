@@ -37,13 +37,14 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 2 / 5,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/1-background 2 1.png'),
                   fit: BoxFit.cover,
@@ -54,7 +55,7 @@ class _Profile extends State<Profile> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 1 / 20),
+                          top: MediaQuery.of(context).size.height * 1 / 18),
                       child: SingleTextWidget(
                           text: 'Tài khoản',
                           textColor: Colors.white,
@@ -63,24 +64,12 @@ class _Profile extends State<Profile> {
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 1 / 20),
-                      child: ClipOval(
-                        child: Image.network(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq-uolODmp69iK_6HwDJR1y1kkUgo-QaRcfecLlw0TsA&s',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 1 / 25),
                       width: MediaQuery.of(context).size.width * 1 / 2,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Color.fromARGB(51, 255, 255, 255)),
+                          color: const Color.fromARGB(51, 255, 255, 255)),
                       child: Column(
                         children: [
                           SingleTextWidget(
