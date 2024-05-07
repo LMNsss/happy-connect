@@ -7,10 +7,12 @@ import 'package:happy_connect/core/services/api_service.dart';
 import 'package:happy_connect/core/shared_pref/shared_pref_ext.dart';
 import 'package:happy_connect/core/utils/api_endpoints.dart';
 import 'package:happy_connect/core/view/Home/home.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:happy_connect/core/components/text.dart';
-import '../services/auth_services.dart';
+
+final apiServiceProvider = Provider<ApiService>((ref) => ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl));
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,33 +22,36 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
-  final ApiService _apiService =
-      ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl);
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   void _login() async {
     String username = _usernameController.text;
     String password = _passwordController.text;
-   if (kDebugMode) {
-    username = 'ngoclm10';
-    password = 'Lmn0812@';
-   }
+   // if (kDebugMode) {
+   //  username = 'ngoclm10';
+   //  password = 'Lmn0812@';
+   // }
     final LoginRequest loginRequest = LoginRequest(
         username: username,
         password: password,
         grantType: 'password',
         refreshToken: 'string');
 
-    var tokenModel = await _apiService
-        .login(loginRequest)
-        .then((value) => value.data.accessToken)
-        .catchError((e) => '');
+    final tokenProvider = FutureProvider<String>((ref) async {
+      final apiService = ref.read(apiServiceProvider);
+      try {
+        final tokenModel = await apiService.login(loginRequest);
+        return tokenModel.data.accessToken;
+        var isSuccess = await _saveToken(tokenModel.data.accessToken);
+      } catch (e) {
+        print('Error while logging in: $e');
+        return ''; // Trả về một giá trị mặc định nếu xảy ra lỗi
+      }
+    });
 
-    // String tokenModel = await _authService.login(username, password);
-    if (tokenModel.isNotEmpty) {
-      var isSuccess = await _saveToken(tokenModel);
-      print(tokenModel);
+    if (tokenProvider.toString().isNotEmpty) {
+      var isSuccess = await _saveToken(tokenProvider.toString());
+      print(tokenProvider.toString());
       if (isSuccess) {
         if (!mounted) return;
         _navigateToHomePage(context);
@@ -61,13 +66,6 @@ class _Login extends State<Login> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    _launchURL(String url) async {
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -176,44 +174,6 @@ class _Login extends State<Login> {
                         ),
                       ),
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(top: 15),
-                    //   child: Center(
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         const Text(
-                    //           'Bạn chưa có tài khoản?',
-                    //           style: TextStyle(fontSize: 15),
-                    //         ),
-                    //         GestureDetector(
-                    //           onTap: () {
-                    //             _launchURL('https://example.com');
-                    //           },
-                    //           child: const Text(
-                    //             'Đăng ký',
-                    //             style: TextStyle(
-                    //               fontSize: 16,
-                    //               color: Colors.red,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     _launchURL('https://example.com');
-                    //   },
-                    //   child: const Text(
-                    //     'Chính sách bảo mật và quyền riêng tư',
-                    //     style: TextStyle(
-                    //       fontSize: 14,
-                    //       color: Colors.black,
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 ),
               ),

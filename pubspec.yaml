@@ -107,5 +107,4 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/1-background 2 1.png
-    - assets/NavigationBar.png
+    - assets/

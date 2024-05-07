@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:happy_connect/core/Models/user_model.dart';
+import 'package:happy_connect/core/Models/user_response.dart';
 import 'package:happy_connect/core/components/text.dart';
-import 'package:happy_connect/core/view/login.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_services.dart';
+
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -15,6 +18,7 @@ class Profile extends StatefulWidget {
 class _Profile extends State<Profile> {
   late UserModel _user = UserModel(userName: 'abc', email: 'abc');
 
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +28,8 @@ class _Profile extends State<Profile> {
   Future<void> _initUserProfile() async {
     AuthService authService = AuthService();
     UserModel? user = await authService.getUserProfile();
-    print(user.toString());
+
+
     if (user != null) {
       setState(() {
         _user = user;
@@ -59,8 +64,16 @@ class _Profile extends State<Profile> {
                       child: SingleTextWidget(
                           text: 'Tài khoản',
                           textColor: Colors.white,
-                          textSize: 20,
+                          textSize: 22,
                           textWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 1 / 16),
+                      width: 100,
+                      height: 100,
+                      child: Image.asset('assets/avatar-user.png',
+                          color: Colors.white),
                     ),
                     Container(
                       margin: EdgeInsets.only(
