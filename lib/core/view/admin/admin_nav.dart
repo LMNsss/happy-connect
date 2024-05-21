@@ -22,42 +22,48 @@ class _AdminNavigationState extends ConsumerState<AdminNavigation> {
         body: Center(
           child: Row(
             children: [
-              Expanded(
-                child: Container(
-                  height: 200,
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+          Expanded(
+          child: Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                    shrinkWrap: true, // Make the GridView shrink to fit its children
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 20.0,
                       mainAxisSpacing: 20.0,
                     ),
-
                     itemCount: 6,
                     itemBuilder: (context, index) {
-                      return Container(
+                      return SizedBox(
                         height: 10,
-                        padding: EdgeInsets.all(10),
-                        color: Colors.blue,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(PhosphorIcons.userCircleGear()),
-                            Container(
-                              width: 150,
-                              child: const Text(
-                                'Danh sách nhân viên onsite',
-                                style: TextStyle(fontSize: 16),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(PhosphorIcons.userCircleGear()),
+                              Container(
+                                child: const Text(
+                                  'Danh sách nhân viên onsite',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
                   ),
-                ),
-              )
+                ],
+              ),
+            ),
+          ),
+        ),
             ],
           ),
         ));
