@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:happy_connect/core/view/sample_photo.dart';
+import 'package:happy_connect/core/view/Home/sample_photo.dart';
 
-import '../profile.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,13 +12,13 @@ class _HomePage extends State<HomePage> {
   int _currentIndex = 0;
 
   // List of widgets for each tab/screen
-  final List<Widget> _pages = [SamplePhoto(), Profile()];
+  final List<Widget> _pages = [const SamplePhoto(),  Profile()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_currentIndex],
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 100,
         child: BottomNavigationBar(
           currentIndex: _currentIndex,

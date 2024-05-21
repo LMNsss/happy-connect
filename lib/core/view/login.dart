@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:go_router/go_router.dart';
 import 'package:happy_connect/core/Models/login_request.dart';
 import 'package:happy_connect/core/services/api_service.dart';
 import 'package:happy_connect/core/shared_pref/shared_pref_ext.dart';
@@ -9,63 +8,70 @@ import 'package:happy_connect/core/utils/api_endpoints.dart';
 import 'package:happy_connect/core/view/Home/home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:happy_connect/core/components/text.dart';
 
-final apiServiceProvider = Provider<ApiService>((ref) => ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl));
+final apiServiceProvider = Provider<ApiService>(
+    (ref) => ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl));
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Login extends ConsumerWidget {
+  Login({super.key});
 
-  @override
-  State<Login> createState() => _Login();
-}
-
-class _Login extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  void _login() async {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-   // if (kDebugMode) {
-   //  username = 'ngoclm10';
-   //  password = 'Lmn0812@';
-   // }
-    final LoginRequest loginRequest = LoginRequest(
+  Future<bool> _saveToken(String tokenModel) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isSuccess = await prefs.saveToken(tokenModel);
+    return isSuccess;
+  }
+
+  Future<bool> _saveEmailUser(String emailUser) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var savedEmail = await prefs.saveEmail(emailUser);
+    return savedEmail;
+  }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    Future<void> _login(WidgetRef ref) async {
+      // Extracting the username and password from the text controllers
+      String username = _usernameController.text;
+      String password = _passwordController.text;
+
+      final loginRequest = LoginRequest(
         username: username,
         password: password,
         grantType: 'password',
-        refreshToken: 'string');
+        refreshToken: 'string',
+      );
 
-    final tokenProvider = FutureProvider<String>((ref) async {
+      // Accessing the ApiService instance
       final apiService = ref.read(apiServiceProvider);
+
       try {
         final tokenModel = await apiService.login(loginRequest);
-        return tokenModel.data.accessToken;
-        var isSuccess = await _saveToken(tokenModel.data.accessToken);
+        final accessToken = tokenModel.data.accessToken;
+        if (accessToken.isNotEmpty) {
+          bool isSuccess = await _saveToken(accessToken);
+          if (isSuccess) {
+            // Save the email of the user
+            await _saveEmailUser(username);
+            // Navigate to the home page
+            context.go('/home');
+            print('Login successful');
+            print(accessToken);
+          } else {
+            print('Failed to save the token');
+          }
+        } else {
+          print('Login failed: Access token is empty');
+        }
       } catch (e) {
+        // Handling any errors that occur during the login process
         print('Error while logging in: $e');
-        return ''; // Trả về một giá trị mặc định nếu xảy ra lỗi
       }
-    });
-
-    if (tokenProvider.toString().isNotEmpty) {
-      var isSuccess = await _saveToken(tokenProvider.toString());
-      print(tokenProvider.toString());
-      if (isSuccess) {
-        if (!mounted) return;
-        _navigateToHomePage(context);
-        print('object');
-      }
-    } else {
-      print('Login failed');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -167,7 +173,7 @@ class _Login extends State<Login> {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.red,
                         ),
-                        onPressed: _login,
+                        onPressed: () => _login(ref),
                         child: const Text(
                           'Đăng nhập',
                           style: TextStyle(fontSize: 20),
@@ -184,14 +190,5 @@ class _Login extends State<Login> {
     );
   }
 
-  Future<bool> _saveToken(String tokenModel) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var isSuccess = await prefs.saveToken(tokenModel);
-    return isSuccess;
-  }
 
-  void _navigateToHomePage(BuildContext context) {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
-  }
 }

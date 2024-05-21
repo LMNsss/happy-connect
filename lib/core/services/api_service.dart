@@ -15,5 +15,5 @@ abstract class ApiService {
   Future<LoginResponse> login(@Body() LoginRequest loginRequest);
 
   @GET('staffs/info')
-  Future<UserResponse> getStaffByEmail(@Query('email') String email);
+  Future<UserResponse> getStaffByEmail(@Header('Authorization') String authorization);
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happy_connect/core/shared_pref/shared_pref_ext.dart';
-import 'package:happy_connect/core/view/Home/home.dart';
-import 'package:happy_connect/core/view/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,21 +12,27 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  Widget build(BuildContext context) {
-    checkLogin(context);
-    return const Placeholder();
+  void initState() {
+    super.initState();
+    checkLogin();
   }
 
-  void checkLogin(BuildContext context) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Future.delayed(
-      Duration.zero,
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) =>
-              sharedPreferences.isLogin() ? HomePage() : const Login(),
-        ),
-      ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
+  }
+
+  void checkLogin() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool isLoggedIn = sharedPreferences.isLogin();
+    Future.delayed(Duration.zero, () {
+      if (isLoggedIn) {
+        context.go('/home');
+      } else {
+        context.go('/login');
+      }
+    });
   }
 }
