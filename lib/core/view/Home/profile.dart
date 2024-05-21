@@ -202,7 +202,7 @@ class Profile extends ConsumerWidget {
                         context.go('/${menuItem['router']}');
                         clearSharedPreferences();
                       } else {
-                        context.go("/${menuItem['router']}/$title");
+                        context.push("/${menuItem['router']}/$title");
                       }
                     },
                     child: Container(

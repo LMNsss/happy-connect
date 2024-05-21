@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:happy_connect/core/view/Home/profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 

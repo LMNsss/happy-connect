@@ -17,7 +17,7 @@ AppBar ProfileAppbar(BuildContext context, String title) {
     centerTitle: true,
     leading: GestureDetector(
       onTap: () {
-        context.go('/home');
+        context.pop();
       },
       child: Icon(
         PhosphorIcons.caretLeft(),
