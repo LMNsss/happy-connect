@@ -39,6 +39,7 @@ Future<void> clearSharedPreferences() async {
 final getInfoUserProvider = FutureProvider<UserResponse>((ref) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getToken();
+  print(token);
   final apiService = ref.watch(apiServiceProvider);
   try {
     final infoUser = await apiService.getStaffByEmail('Bearer $token');

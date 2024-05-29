@@ -24,17 +24,12 @@ class Login extends ConsumerWidget {
     return isSuccess;
   }
 
-  Future<bool> _saveEmailUser(String emailUser) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var savedEmail = await prefs.saveEmail(emailUser);
-    return savedEmail;
-  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    Future<void> _login(WidgetRef ref) async {
+    Future<void> login(WidgetRef ref) async {
       // Extracting the username and password from the text controllers
       String username = _usernameController.text;
       String password = _passwordController.text;
@@ -56,7 +51,6 @@ class Login extends ConsumerWidget {
           bool isSuccess = await _saveToken(accessToken);
           if (isSuccess) {
             // Save the email of the user
-            await _saveEmailUser(username);
             // Navigate to the home page
             context.go('/home');
             print('Login successful');
@@ -173,7 +167,7 @@ class Login extends ConsumerWidget {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.red,
                         ),
-                        onPressed: () => _login(ref),
+                        onPressed: () => login(ref),
                         child: const Text(
                           'Đăng nhập',
                           style: TextStyle(fontSize: 20),

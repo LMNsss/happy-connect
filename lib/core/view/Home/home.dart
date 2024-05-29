@@ -48,10 +48,10 @@ class _HomePage extends State<HomePage> {
         child: FloatingActionButton(
           backgroundColor: Colors.red,
           onPressed: () {
-            // Add your floating button action here
+
           },
           child: Icon(Icons.camera_alt_rounded, color: Colors.white, size: 45,),
-          shape: StadiumBorder(), // Sử dụng StadiumBorder để tùy chỉnh hình dạng
+          shape: StadiumBorder(),
         ),
       ),
     );

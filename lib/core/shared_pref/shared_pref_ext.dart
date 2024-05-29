@@ -21,11 +21,4 @@ extension SharedPref on SharedPreferences {
     return getString(token)?.isNotEmpty ?? false;
   }
 
-  Future<bool> saveEmail(String emailUser){
-    return setString(email, emailUser);
-  }
-
-  String? getEmail(){
-    return getString(email);
-  }
 }
