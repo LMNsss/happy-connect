@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:happy_connect/core/view/Home/sample_photo.dart';
 
+import '../../../main.dart';
+import '../../components/camera.dart';
 import 'profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,7 +50,12 @@ class _HomePage extends State<HomePage> {
         child: FloatingActionButton(
           backgroundColor: Colors.red,
           onPressed: () {
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CameraPage(camera: cameras.first),
+              ),
+            );
           },
           child: Icon(Icons.camera_alt_rounded, color: Colors.white, size: 45,),
           shape: StadiumBorder(),

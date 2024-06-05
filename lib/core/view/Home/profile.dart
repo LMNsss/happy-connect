@@ -244,7 +244,7 @@ List<Map<String, dynamic>> dataListItem = [
   {
     'icon': PhosphorIcons.userCircleGear(),
     'title': 'Lịch sử chấm công',
-    'router': 'admin_nav'
+    'router': 'checkin_history'
   },
   {'icon': PhosphorIcons.usersThree(), 'title': 'Nhóm', 'router': 'admin_nav'},
   {
