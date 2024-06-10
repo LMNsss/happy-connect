@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -41,25 +42,33 @@ class _AdminNavigationState extends ConsumerState<AdminNavigation> {
                         itemCount: dataListItem.length,
                         itemBuilder: (context, index) {
                           final menuItem = dataListItem[index];
-                          return Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              // color: Colors.blue,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(menuItem['icon'], ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    menuItem['title']!,
-                                    style: const TextStyle(fontSize: 16),
+                          return GestureDetector(
+                            onTap: () {
+                              String title = menuItem['title'];
+                              context.push("/${menuItem['router']}/$title");
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                // color: Colors.blue,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    menuItem['icon'],
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Text(
+                                      menuItem['title']!,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -78,9 +87,9 @@ class _AdminNavigationState extends ConsumerState<AdminNavigation> {
 
 List<Map<String, dynamic>> dataListItem = [
   {
-    'icon':PhosphorIcons.userCircleGear(),
+    'icon': PhosphorIcons.userCircleGear(),
     'title': 'Quản lý Admin',
-    'router': 'admin_nav'
+    'router': 'admin_managerment'
   },
   {
     'icon': PhosphorIcons.image(),

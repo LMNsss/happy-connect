@@ -5,6 +5,7 @@ import 'package:happy_connect/core/view/Home/profile.dart';
 import 'package:happy_connect/core/view/Home/sample_photo.dart';
 import 'package:happy_connect/core/view/User/checkin_history.dart';
 import 'package:happy_connect/core/view/admin/admin_nav.dart';
+import 'package:happy_connect/core/view/admin/admin_pages/admin_management.dart';
 import 'package:happy_connect/core/view/login.dart';
 import 'package:happy_connect/core/view/splash_screen.dart';
 
@@ -56,6 +57,12 @@ class AppRouter {
               path: '/checkin_history/:title',
               builder: (BuildContext context, GoRouterState state) {
                 return CheckinHistory(title: state.pathParameters['title']!);
+              },
+            ),
+            GoRoute(
+              path: '/admin_managerment/:title',
+              builder: (BuildContext context, GoRouterState state) {
+                return AdminManagement(title: state.pathParameters['title']!);
               },
             ),
           ],
