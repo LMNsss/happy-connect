@@ -37,8 +37,7 @@ class Login extends ConsumerWidget {
       final loginRequest = LoginRequest(
         username: username,
         password: password,
-        grantType: 'password',
-        refreshToken: 'string',
+        grantType: 'password'
       );
 
       // Accessing the ApiService instance

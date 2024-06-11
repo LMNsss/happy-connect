@@ -16,4 +16,7 @@ abstract class ApiService {
 
   @GET('staffs/info')
   Future<UserResponse> getStaffByEmail(@Header('Authorization') String authorization);
+
+  @GET('admin/get-admin')
+  Future<UserResponse> getAdmin(@Header('Authorization') String authorization);
 }

@@ -13,24 +13,6 @@ final apiServiceProvider = Provider<ApiService>(
   (ref) => ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl),
 );
 
-class ItemColorsNotifier extends StateNotifier<List<Color>> {
-  ItemColorsNotifier()
-      : super(List.filled(
-            10, const Color(0xFF475467))); // Adjust the length as needed
-
-  void updateColor(int index, Color color) {
-    state = [...state]..[index] = color;
-  }
-}
-
-class BackgroundItemColorsNotifier extends StateNotifier<List<Color>> {
-  BackgroundItemColorsNotifier()
-      : super(List.filled(10, Colors.white)); // Adjust the length as needed
-
-  void updateColor(int index, Color color) {
-    state = [...state]..[index] = color;
-  }
-}
 Future<void> clearSharedPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.clear();

@@ -1,7 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:happy_connect/core/Models/admin_response.dart';
 import 'package:happy_connect/core/components/app_bar_profile.dart';
+import 'package:happy_connect/core/shared_pref/shared_pref_ext.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../services/api_service.dart';
+import '../../../utils/api_endpoints.dart';
+
+final apiServiceProvider = Provider<ApiService>(
+(ref) => ApiService(Dio(), baseUrl: ApiEndPoints.baseUrl),
+);
+
+
+
 
 class AdminManagement extends ConsumerStatefulWidget {
   final String title;
