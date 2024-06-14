@@ -5,7 +5,6 @@ import 'package:happy_connect/core/Models/login_request.dart';
 import 'package:happy_connect/core/services/api_service.dart';
 import 'package:happy_connect/core/shared_pref/shared_pref_ext.dart';
 import 'package:happy_connect/core/utils/api_endpoints.dart';
-import 'package:happy_connect/core/view/Home/home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:happy_connect/core/components/text.dart';
@@ -35,25 +34,28 @@ class Login extends ConsumerWidget {
       String password = _passwordController.text;
 
       final loginRequest = LoginRequest(
-        username: username,
-        password: password,
-        grantType: 'password'
+          username: username,
+          password: password,
+          grantType: 'password'
       );
 
       // Accessing the ApiService instance
       final apiService = ref.read(apiServiceProvider);
 
       try {
+        // Sending login request
         final tokenModel = await apiService.login(loginRequest);
         final accessToken = tokenModel.data.accessToken;
+        // Check if access token is not empty
         if (accessToken.isNotEmpty) {
+          // Save the access token
           bool isSuccess = await _saveToken(accessToken);
           if (isSuccess) {
-            // Save the email of the user
+            // Save the email of the user (if needed)
             // Navigate to the home page
             context.go('/home');
             print('Login successful');
-            print(accessToken);
+            print('accessToken: $accessToken');
           } else {
             print('Failed to save the token');
           }
